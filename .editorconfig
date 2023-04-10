@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CS1701: アセンブリ参照が ID と一致すると仮定します
+dotnet_diagnostic.CS1701.severity = silent
