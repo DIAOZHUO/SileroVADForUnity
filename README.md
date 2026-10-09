@@ -17,7 +17,7 @@ Please install via package manager.
 1. In the Unity Editor, open the Package Manager by navigating to Window > Package Manager.
 2. Add (+) button in the top-left corner of the Package Manager toolbar.
 3. Select Add package from git URL.
-4. Paste https://github.com/DIAOZHUO/SileroVADForUnity
+4. Paste https://github.com/DIAOZHUO/SileroVADForUnity.git
 5. (quick getting start) In the Package Window, Samples > import "VAD Test Demo" Scene.
 
 ### Usage
