@@ -1,0 +1,25 @@
+{
+  "name": "com.enzian.silerovad",
+  "version": "1.0.0",
+  "displayName": "Silero VAD for Unity",
+  "description": "Voice activity detection using the Silero VAD ONNX model, running on ONNX Runtime. Works in the Editor and on Windows, macOS and Android (Meta Quest).",
+  "unity": "2022.3",
+  "keywords": [
+    "vad",
+    "voice activity detection",
+    "audio",
+    "onnx",
+    "silero",
+    "onnxruntime"
+  ],
+  "author": {
+    "name": "Enzian"
+  },
+  "samples": [
+    {
+      "displayName": "VAD Test Demo",
+      "description": "Microphone voice-activity-detection demo scene with a simple UI.",
+      "path": "Samples~/VADTest"
+    }
+  ]
+}
