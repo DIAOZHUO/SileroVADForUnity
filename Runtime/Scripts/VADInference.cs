@@ -29,6 +29,9 @@ namespace UnityVAD
         public bool triggered = false;
         public float threshold = 0.5f;
 
+        /// Speech probability of the last chunk passed to UpdateSpeechData.
+        public float LastProbability { get; private set; }
+
         public VADUtil.EventHandler<SpeechEvent> SpeechEventHandler;
 
 
@@ -81,7 +84,8 @@ namespace UnityVAD
         }
 
 
-        private void ResetState()
+        // Clear the model state, e.g. before feeding an unrelated audio stream.
+        public void ResetState()
         {
             stateData = new float[2 * 1 * 128];
             context = new float[CONTEXT];
@@ -121,6 +125,7 @@ namespace UnityVAD
         {
             if (session == null) return;   // model not loaded yet (async load on Android/WebGL)
             var output = InferenceOnnx(input);
+            LastProbability = output;
             // speech start
             if ((output >= threshold) && (triggered == false))
             {
@@ -131,8 +136,10 @@ namespace UnityVAD
             // speech end
             if ((output < (threshold - 0.15)) && (triggered == true))
             {
+                // Keep the LSTM state and context running across utterances, like upstream Silero's
+                // VADIterator. Resetting here left the model cold for the next utterance, so its onset
+                // was missed (VAD covered ~66% instead of ~97% of speech on short-turn conversation).
                 triggered = false;
-                ResetState();
                 SpeechEventHandler?.Invoke(SpeechEvent.End);
             }
         }

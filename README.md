@@ -51,3 +51,20 @@ Put the "AudioRecorder" prefab in your scene and reference it.
         Debug.Log("Audio data added");
     }
 ```
+
+### Inspector settings (AudioRecorder)
+
+| Setting | Prefab default | Description |
+|---|---|---|
+| `DetectThreshold` | 0.5 | VAD speech probability that starts speech (speech ends below this − 0.15). Higher = only clear speech. |
+| `SilentTimeInterval` | 1.5 | Seconds of silence after speech that close a segment. Use 0.2–0.3 for conversation, so turns are not merged. |
+| `FixTrimLength` | 2 | 512-sample chunks (32 ms each) kept before the detected speech start. |
+| `MaxSegmentSeconds` | 0 | Emit a segment every N seconds while speech continues (0 = only when speech ends). |
+| `MicBufferSeconds` | 10 | Length of the looping microphone buffer; the recording is never restarted. |
+
+### Advanced
+
+- `MIC_SegmentAddedEventHandler` delivers the same segments as `MIC_DataAddedEventHandler` as a `VADSegment`,
+  which also carries the segment's start position in the stream and the VAD probability of every 512-sample chunk.
+- `VADSegmenter` is the segmentation logic behind `AudioRecorder`. Feed it 512-sample chunks of any 16 kHz stream
+  (e.g. an audio file in a test) to get exactly the same segments as from the microphone.
